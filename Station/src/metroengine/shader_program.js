@@ -1,6 +1,6 @@
 "use strict";
 
-import * as core from "./core/gl.js";
+import core from "./core/gl.js";
 import * as vertexBuffer from "./core/vertex_buffer.js";
 
 class ShaderProgram {
@@ -9,6 +9,7 @@ class ShaderProgram {
     mVertexPosRef = null;
     mModelMatrixRef = null;
     mPixelColorRef = null;
+    mCameraMatrixRef = null;
 
     constructor(vShaderPath, fShaderPath) {
         let gl = core.get();
@@ -29,9 +30,10 @@ class ShaderProgram {
         this.mVertexPosRef = gl.getAttribLocation(this.mCompiledShader, "aPosition");
         this.mPixelColorRef = gl.getUniformLocation(this.mCompiledShader, "uPixelColor");
         this.mModelMatrixRef = gl.getUniformLocation(this.mCompiledShader, "uModelXformMatrix");
+        this.mCameraMatrixRef = gl.getUniformLocation(this.mCompiledShader, "uCameraXformMatrix");
     }
 
-    activate(pixelColor, trsMatrix) {
+    activate(pixelColor, trsMatrix, cameraMatrix) {
         let gl = core.get();
     
         gl.useProgram(this.mCompiledShader);
@@ -40,8 +42,8 @@ class ShaderProgram {
         gl.enableVertexAttribArray(this.mVertexPosRef);
 
         gl.uniform4fv(this.mPixelColorRef, pixelColor);
-        console.log(trsMatrix);
         gl.uniformMatrix4fv(this.mModelMatrixRef, false, trsMatrix);
+        gl.uniformMatrix4fv(this.mCameraMatrixRef, false, cameraMatrix);
     }
 }
 

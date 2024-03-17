@@ -1,6 +1,6 @@
 "use strict";
 
-import * as glSys from "./core/gl.js";
+import glSys from "./core/gl.js";
 import * as shaderResources from "./core/shader_resources.js";
 import Transform from "./transform.js";
 
@@ -15,9 +15,9 @@ class Renderable {
         return this.mXform;
     }
 
-    draw() {
+    draw(camera) {
         let gl = glSys.get();
-        this.mShader.activate(this.mColor, this.getXform().getTRSMatrix());
+        this.mShader.activate(this.mColor, this.getXform().getTRSMatrix(), camera.getCameraMatrix());
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
 

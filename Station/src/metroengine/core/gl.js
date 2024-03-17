@@ -18,4 +18,4 @@ function init(canvasId) {
 }
 
 
-export {get, init};
+export default {get, init};

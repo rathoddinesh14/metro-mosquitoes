@@ -1,6 +1,6 @@
 "use strict";
 
-import * as core from "./gl.js";
+import core from "./gl.js";
 
 let mVertexBuffer = null;
 
